@@ -30,16 +30,14 @@ class Superoptimizer:
         xor = CPU.xor
         inc = CPU.inc
         ops_values = CPU.ops.values()
+        load_arg_set = [(val,) for val in range(max_val + 1)]
+        swap_arg_set = tuple(product(range(max_mem), repeat=2))
+        inc_arg_set = [(val,) for val in range(max_mem)]
+        arg_set_gen = {load: load_arg_set, swap: swap_arg_set, xor:
+                       swap_arg_set, inc: inc_arg_set}
         for length in range(1, max_length + 1):
             for prog in product(ops_values, repeat=length):
-                arg_sets = []
-                for op in prog:
-                    if op == load:
-                        arg_sets.append([(val,) for val in range(max_val + 1)])
-                    elif op == swap or op == xor:
-                        arg_sets.append(product(range(max_mem), repeat=2))
-                    elif op == inc:
-                        arg_sets.append([(val,) for val in range(max_mem)])
+                arg_sets = [arg_set_gen[op] for op in prog]
                 for arg_set in product(*arg_sets):
                     program = [(op, *args) for op, args in zip(prog, arg_set)] 
                     yield program
