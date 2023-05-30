@@ -24,13 +24,14 @@ class Superoptimizer:
         self.program_cache = {}
 
     # Generates all possible programs.
-    def generate_programs(self, cpu, max_length, max_mem, max_val):
+    def generate_programs(self, max_length, max_mem, max_val):
         load = CPU.load
         swap = CPU.swap
         xor = CPU.xor
         inc = CPU.inc
+        ops_values = CPU.ops.values()
         for length in range(1, max_length + 1):
-            for prog in product(cpu.ops.values(), repeat=length):
+            for prog in product(ops_values, repeat=length):
                 arg_sets = []
                 for op in prog:
                     if op == load:
@@ -47,7 +48,7 @@ class Superoptimizer:
     def search(self, max_length, max_mem, max_val, target_state, debug=False):
         count = 0
         cpu = CPU(max_mem)
-        for program in self.generate_programs(cpu, max_length, max_mem, max_val):
+        for program in self.generate_programs(max_length, max_mem, max_val):
             state = cpu.execute(program)
             if state == target_state:
                 state = tuple(state) 
