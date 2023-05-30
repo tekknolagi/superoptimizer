@@ -29,11 +29,11 @@ class Superoptimizer:
             for prog in product(cpu.ops.values(), repeat=length):
                 arg_sets = []
                 for op in prog:
-                    if op == cpu.load:
+                    if op == CPU.load:
                         arg_sets.append([tuple([val]) for val in range(max_val + 1)])
-                    elif op == cpu.swap or op == cpu.xor: 
+                    elif op == CPU.swap or op == CPU.xor:
                         arg_sets.append(product(range(max_mem), repeat=2))
-                    elif op == cpu.inc:
+                    elif op == CPU.inc:
                         arg_sets.append([tuple([val]) for val in range(max_mem)])
                 for arg_set in product(*arg_sets):
                     program = [(op, *args) for op, args in zip(prog, arg_set)] 

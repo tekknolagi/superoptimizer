@@ -2,14 +2,14 @@ class CPU:
     def __init__(self, max_mem_cells):
         self.max_mem_cells = max_mem_cells
         self.state = [0] * max_mem_cells
-        self.ops = {'LOAD': self.load, 'SWAP': self.swap, 'XOR': self.xor, 'INC': self.inc}
+        self.ops = {'LOAD': CPU.load, 'SWAP': CPU.swap, 'XOR': CPU.xor, 'INC': CPU.inc}
 
     def execute(self, program):
         state = self.state.copy()
         for instruction in program:
             op = instruction[0]
             args = instruction[1:]
-            state = op(state, *args)
+            state = op(self, state, *args)
         return state
 
     def load(self, state, val):
