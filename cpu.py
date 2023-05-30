@@ -7,7 +7,7 @@ class CPU:
         state = self.state.copy()
         for instruction in program:
             op = instruction[0]
-            args = instruction[1:]
+            args = instruction[1]
             state = op(self, state, *args)
         return state
 

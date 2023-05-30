@@ -11,7 +11,7 @@ def parse(assembly):
             op_str, *args_str = match.groups()
             op = CPU.ops[op_str]
             args = [int(arg) for arg in args_str if arg is not None]
-            program.append((op, *args))
+            program.append((op, args))
     return program
 
 # Turns a program into a string.
@@ -20,7 +20,7 @@ def output(program):
     assembly = ""
     for instruction in program:
         op = instruction[0]
-        args = instruction[1:]
+        args = instruction[1]
         if op.__name__ == CPU.load.__name__:
             assembly += f"LOAD {args[0]}\n"
         elif op.__name__ == CPU.swap.__name__:

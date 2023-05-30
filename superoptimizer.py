@@ -39,7 +39,7 @@ class Superoptimizer:
             for prog in product(ops_values, repeat=length):
                 arg_sets = [arg_set_gen[op] for op in prog]
                 for arg_set in product(*arg_sets):
-                    program = [(op, *args) for op, args in zip(prog, arg_set)] 
+                    program = [(op, args) for op, args in zip(prog, arg_set)]
                     yield program
 
     # Tests all of the generated programs and returns the shortest.
