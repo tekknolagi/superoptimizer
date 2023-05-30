@@ -50,7 +50,8 @@ class Superoptimizer:
             state = cpu.execute(program)
             if state == target_state:
                 state = tuple(state) 
-                if state not in self.program_cache or len(program) < len(self.program_cache[state]):
+                existing_program = self.program_cache.get(state)
+                if existing_program is None or len(program) < len(existing_program):
                     self.program_cache[state] = program
             
             # Debugging.
