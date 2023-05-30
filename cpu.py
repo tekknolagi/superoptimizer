@@ -8,7 +8,10 @@ class CPU:
         for instruction in program:
             op = instruction[0]
             args = instruction[1]
-            op(self, state, *args)
+            if op is CPU.swap or op is CPU.xor:
+                op(self, state, args[0], args[1])
+            else:
+                op(self, state, args[0])
         return state
 
     def load(self, state, val):
