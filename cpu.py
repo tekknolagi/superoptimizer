@@ -8,9 +8,8 @@ class CPU:
         state = self.state.copy()
         for instruction in program:
             op = instruction[0]
-            args = list(instruction[1:])
-            args.insert(0, state)
-            state = op(*args)
+            args = instruction[1:]
+            state = op(state, *args)
         return state
 
     def load(self, state, val):
