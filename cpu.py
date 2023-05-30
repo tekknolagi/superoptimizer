@@ -5,10 +5,12 @@ class CPU:
 
     def execute(self, program):
         state = self.state.copy()
+        swap = CPU.swap
+        xor = CPU.xor
         for instruction in program:
             op = instruction[0]
             args = instruction[1]
-            if op is CPU.swap or op is CPU.xor:
+            if op is swap or op is xor:
                 op(self, state, args[0], args[1])
             else:
                 op(self, state, args[0])
